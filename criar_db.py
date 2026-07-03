@@ -17,7 +17,7 @@ def criar_db():
 
 def carregar_documentos(caminho_pasta: str = "base") -> list:
 
-    pasta = Path(r"/Users/vargalb/Documents/Automações/AgentRag/base")
+    pasta = Path(r"/Users/vargalb/Documents/Automações/FinanceChatBot/base")
     if not pasta.exists():
         raise FileNotFoundError(f"A pasta '{caminho_pasta}' não foi encontrada.")
     if not pasta.is_dir():

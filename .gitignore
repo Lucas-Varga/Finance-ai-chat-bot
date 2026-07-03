@@ -22,3 +22,8 @@ base
 ./base
 /base
 .base
+
+parse_doc
+./parse_doc
+/parse_doc
+.parse_doc
