@@ -23,7 +23,7 @@ base
 /base
 .base
 
-parse_doc
-./parse_doc
-/parse_doc
-.parse_doc
+output
+./output
+/output
+.output
