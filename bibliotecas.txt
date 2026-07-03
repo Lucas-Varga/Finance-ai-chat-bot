@@ -1,0 +1,14 @@
+pip install langchain-unstructured langchain-text-splitters langchain-community langchain-chroma langchain-openai python-dotenv pip install "unstructured[pdf]" pip install unstructured
+
+
+# entrando no ambiente virtual
+source venv/bin/activate
+
+# sair do ambiente virtual
+deactivate
+
+#criar ambiente virtual
+python3 -m venv venv
+
+pip install unstructured
+pip install "unstructured[pdf]"
