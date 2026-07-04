@@ -1,0 +1,40 @@
+experiment:
+  auto_update_config: true
+  chunking_strategies:
+  - chunk_overlap: 200
+    chunk_size: 1000
+    name: recursive_1000_200
+    strategy: recursive
+  - chunk_overlap: 100
+    chunk_size: 500
+    name: recursive_500_100
+    strategy: recursive
+  - chunk_overlap: 300
+    chunk_size: 1500
+    name: recursive_1500_300
+    strategy: recursive
+  pass_threshold: 3
+  retrieval_strategies:
+  - standard
+  - mmr
+  - hyde
+experiment_name: champion_recursive_500_100_standard
+gold_layer:
+  llm:
+    model: gpt-4o-mini
+    provider: openai
+    temperature: 0.1
+  retrieval:
+    strategy: standard
+    top_k: 4
+silver_layer:
+  chunking:
+    chunk_overlap: 100
+    chunk_size: 500
+    strategy: recursive
+  embedding:
+    model: text-embedding-3-small
+    provider: openai
+  vector_db:
+    base_collection_name: finance_docs
+    path: ./chroma_db

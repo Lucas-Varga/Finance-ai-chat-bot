@@ -1,29 +1,42 @@
-./venv
-.venv
-/venv
-venv
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
 
-bibliotecas
-./bibliotecas
-/bibliotecas
-.bibliotecas
+# Virtual environment
+venv/
+.venv/
+env/
 
-env
-./env
-/env
+# Environment variables (sensitive)
 .env
 
-db
-./db
-/db
-.db
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 
-base
-./base
-/base
-.base
+# OS
+.DS_Store
+Thumbs.db
 
-output
-./output
-/output
-.output
+# Generated logs
+logs/
+
+# Vector database (regeneratable)
+chroma_db/
+db/
+
+# Generated evaluation results
+evaluation_results*.csv
+
+# Output / temp
+output/
+tmp/
+
+# PDF source files (add large PDF collections here if needed)
+# base/

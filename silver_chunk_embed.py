@@ -489,7 +489,42 @@ def run_pipeline(
 # --------------------------------------------------------------------------- #
 
 
+def _load_silver_config_from_yaml(config_path: str = "rag_config.yaml") -> Dict[str, Any]:
+    """Load default config from rag_config.yaml, falling back to built-in defaults."""
+    defaults: Dict[str, Any] = {
+        "strategy": "recursive",
+        "chunk_size": 1000,
+        "chunk_overlap": 200,
+        "persist_directory": "./chroma_db",
+        "embedding_model": "text-embedding-3-small",
+        "base_collection_name": "rag_docs",
+        "batch_size": 100,
+        "batch_delay_seconds": 0.0,
+    }
+    if not os.path.exists(config_path):
+        return defaults
+    try:
+        import yaml
+        with open(config_path, "r") as f:
+            cfg = yaml.safe_load(f) or {}
+        silver = cfg.get("silver_layer", {})
+        chunking = silver.get("chunking", {})
+        embedding = silver.get("embedding", {})
+        vector_db = silver.get("vector_db", {})
+        defaults["strategy"] = chunking.get("strategy", defaults["strategy"])
+        defaults["chunk_size"] = chunking.get("chunk_size", defaults["chunk_size"])
+        defaults["chunk_overlap"] = chunking.get("chunk_overlap", defaults["chunk_overlap"])
+        defaults["embedding_model"] = embedding.get("model", defaults["embedding_model"])
+        defaults["persist_directory"] = vector_db.get("path", defaults["persist_directory"])
+        defaults["base_collection_name"] = vector_db.get("base_collection_name", defaults["base_collection_name"])
+    except Exception:
+        logger.warning("Failed to load %s, using built-in defaults", config_path)
+    return defaults
+
+
 def _build_arg_parser() -> argparse.ArgumentParser:
+    yaml_defaults = _load_silver_config_from_yaml()
+
     parser = argparse.ArgumentParser(
         description=(
             "Silver Layer: chunk and embed Bronze-layer JSON into a ChromaDB "
@@ -500,22 +535,22 @@ def _build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--strategy",
         type=str,
-        default="recursive",
+        default=yaml_defaults["strategy"],
         choices=SplitterFactory.available_strategies(),
         help="Chunking strategy",
     )
-    parser.add_argument("--chunk-size", type=int, default=1000, help="Maximum chunk size")
-    parser.add_argument("--chunk-overlap", type=int, default=200, help="Overlap between chunks")
+    parser.add_argument("--chunk-size", type=int, default=yaml_defaults["chunk_size"], help="Maximum chunk size")
+    parser.add_argument("--chunk-overlap", type=int, default=yaml_defaults["chunk_overlap"], help="Overlap between chunks")
     parser.add_argument(
         "--persist-directory",
         type=str,
-        default="./chroma_db",
+        default=yaml_defaults["persist_directory"],
         help="ChromaDB persistence directory",
     )
     parser.add_argument(
         "--embedding-model",
         type=str,
-        default="text-embedding-3-small",
+        default=yaml_defaults["embedding_model"],
         help="OpenAI embedding model name",
     )
     parser.add_argument(
@@ -527,19 +562,19 @@ def _build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--base-collection-name",
         type=str,
-        default="rag_docs",
+        default=yaml_defaults["base_collection_name"],
         help="Base collection name (suffixed by strategy)",
     )
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=100,
+        default=yaml_defaults["batch_size"],
         help="Number of chunks per vector DB insertion batch",
     )
     parser.add_argument(
         "--batch-delay-seconds",
         type=float,
-        default=0.0,
+        default=yaml_defaults["batch_delay_seconds"],
         help="Delay (seconds) between insertion batches to avoid rate limits",
     )
     parser.add_argument(
