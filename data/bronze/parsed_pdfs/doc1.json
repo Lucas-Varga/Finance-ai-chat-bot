@@ -1,0 +1,58 @@
+[
+  {
+    "page_content": "Curso: Programação Orientada a Objetos com Java\n\nhttp://educandoweb.com.br\n\nProf. Dr. Nelio Alves\n\nCapítulo: Acesso a banco de dados com JDBC\n\nObjetivo geral:\n\nConhecer os principais recursos do JDBC na teoria e prática\n\nElaborar a estrutura básica de um projeto com JDBC\n\nImplementar o padrão DAO manualmente com JDBC\n\nVisão geral do JDBC\n\nJDBC (Java Database Connectivity): API padrão do Java para acesso a dados Páginas oficiais:\n\no https://docs.oracle.com/javase/8/docs/technotes/guides/jdbc/\n\no https://docs.oracle.com/javase/8/docs/api/java/sql/package-summary.html\n\nPacotes: java.sql e javax.sql (API suplementar para servidores)\n\n| oes | JDBC Driver Manager |\n\nJDBC Driver JDBC Driver JDBC Driver (PostgreSQL) (Oracle) (Sybase) PostgreSQL Oracle Sybase Database Database Database",
+    "metadata": {
+      "source": "doc1.pdf",
+      "page": 1
+    }
+  },
+  {
+    "page_content": "Instalação das ferramentas:\n\nInstalar o MySQL Server e o MySQL Workbench\n\nPreparação do primeiro projeto no Eclipse\n\nCódigo fonte: https://github.com/acenelio/jdbc1\n\nChecklist:\n\nUsando o MySQL Workbench, crie uma base de dados chamada \"coursejdbc\"\n\nBaixar o MySQL Java Connector\n\nCaso ainda não exista, criar uma User Library contendo o arquivo .jar do driver do MySQL\n\no Window -> Preferences -> Java -> Build path -> User Libraries\n\no Dê o nome da User Library de MySQLConnector\n\no Add external JARs -> (localize o arquivo jar)\n\nCriar um novo Java Project\n\no Acrescentar a User Library MySQLConnector ao projeto\n\nNa pasta raiz do projeto, criar um arquivo \"db.properties\" contendo os dados de conexão: user=developer\n\npassword=1234567\n\ndburl=jdbc:mysql://localhost:3306/coursejdbc\n\nuseSSL=false\n\nNo pacote \"db\", criar uma exceção personalizada DbException\n\nNo pacote \"db\", criar uma classe DB com métodos estáticos auxiliares\n\no Obter e fechar uma conexão com o banco\n\nDemo: recuperar dados\n\nScript SQL: material de apoio ou https://github.com/acenelio/demo-dao-jdbc/blob/master/database.sql\n\nCódigo fonte: https://github.com/acenelio/jdbc2\n\nAPI:\n\nStatement\n\nResultSet\n\no first() [move para posição 1, se houver]\n\no beforeFirst() [move para posição 0]\n\no next() [move para o próximo, retorna false se já estiver no último]\n\no absolute(int) [move para a posição dada, lembrando que dados reais começam em 1]\n\nChecklist:\n\nUsar o script SQL para criar a base de dados \"coursejdbc\"\n\nFazer um pequeno programa para recuperar os departamentos\n\nNa classe DB, criar métodos auxiliares estáticos para fechar ResultSet e Statement\n\nAtenção: o objeto ResultSet contém os dados armazenados na forma de tabela:\n\n(posicio) Id [Name 1 1 [Computers 2 2 Electronics 3 3 Fashion 4 4 Books",
+    "metadata": {
+      "source": "doc1.pdf",
+      "page": 2
+    }
+  },
+  {
+    "page_content": "Demo: inserir dados\n\nCódigo fonte: https://github.com/acenelio/jdbc3\n\nAPI:\n\nPreparedStatement\n\nexecuteUpdate\n\nStatement.RETURN_GENERATED_KEYS\n\ngetGeneratedKeys\n\nChecklist:\n\nInserção simples com preparedStatement\n\nInserção com recuperação de Id\n\nDemo: atualizar dados\n\nCódigo fonte: https://github.com/acenelio/jdbc4\n\nDemo: deletar dados\n\nCódigo fonte: https://github.com/acenelio/jdbc5\n\nChecklist:\n\nCriar DbIntegrityException\n\nTratar a exceção de integridade referencial\n\nDemo: transações\n\nReferências: https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/product-overview/acid.html\n\nCódigo fonte: https://github.com/acenelio/jdbc6\n\nAPI:\n\nsetAutoCommit(false)\n\ncommit()\n\nrollback()",
+    "metadata": {
+      "source": "doc1.pdf",
+      "page": 3
+    }
+  },
+  {
+    "page_content": "Padrão de projeto DAO (Data Access Object)\n\nReferências:\n\nhttps://www.devmedia.com.br/dao-pattern-persistencia-de-dados-utilizando-o-padrao-dao/30999 https://www.oracle.com/technetwork/java/dataaccessobject-138824.html\n\nIdeia geral do padrão DAO:\n\nPara cada entidade, haverá um objeto responsável por fazer acesso a dados relacionado a esta entidade. Por exemplo:\n\no Cliente: ClienteDao\n\no Produto: ProdutoDao\n\no Pedido: PedidoDao\n\nCada DAO será definido por uma interface.\n\nA injeção de dependência pode ser feita por meio do padrão de projeto Factory\n\n<<interface>> ClientDao es + inser(obj : Client) : void + update(obj : Client) : void + deleteByld(id : Integer) : void + findByld(id : Integer) : Client + findAll() : List<Client> <<interface>> ProductDao + insert(obj : Product) : void + update(obj : Product) : void + deleteByld(id : Integer) : void + findByld(id : Integer) : Product + findAll() : List<Product> x DaoFactory + createClientDao() : ClientDao + createProductDaol) : ProductDao",
+    "metadata": {
+      "source": "doc1.pdf",
+      "page": 4
+    }
+  },
+  {
+    "page_content": "Creating project and git repository\n\nProject: http://github.com/acenelio/demo-dao-jdbc\n\nChecklist:\n\nGithub: create a new project\n\no NOTE: choose .gitignore type as Java\n\nEclipse: create new java project with MySQLConnector library\n\no Copy db package and db.properties from: https://github.com/acenelio/jdbc5\n\nCreate local repository and push to Github:\n\ngit init\n\ngit remote add origin https://github.com/acenelio/jdbc-dao-demo.git\n\ngit pull origin master\n\ngit add .\n\ngit commit -m \"Project created\"\n\ngit push -u origin master\n\nDepartment entity class\n\nEntity class checklist:\n\nAttributes\n\nConstructors\n\nGetters/Setters\n\nhashCode and equals\n\ntoString\n\nimplements Serializable\n\n- id: Integer _deaanient Department - name : String a - email : String -id: ee - birthDate : Date -hame : String PC - baseSalary : Double\n\nSeller entity class\n\n(video)\n\nDepartmentDao and SellerDao interfaces\n\n(video)\n\nSellerDaoJDBC and DaoFactory\n\n(video)",
+    "metadata": {
+      "source": "doc1.pdf",
+      "page": 5
+    }
+  },
+  {
+    "page_content": "findById implementation\n\nSQL Query:\n\nSELECT seller.*,department.Name as DepName FROM seller INNER JOIN department ON seller.DepartmentId = department.Id WHERE seller.Id = ?\n\nResultSet (table) Id Name Email BirthDate BaseSalary DepartmentId DepName > |3 Alex Grey alex@gmail.com 1988-01-15 00:00:00.000000 2200 1 Computers Seller id=3 Department email = alex@gmail.com co birthDate = 15/01/1988 name = Computers baseSalary = 2200.0 associated objects\n\nReusing instantiation\n\nprivate Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException { Seller obj = new Seller();\n\nobj.setId(rs.getInt(\"Id\"));\n\nobj.setName(rs.getString(\"Name\"));\n\nobj.setEmail(rs.getString(\"Email\"));\n\nobj.setBaseSalary(rs.getDouble(\"BaseSalary\"));\n\nobj.setBirthDate(rs.getDate(\"BirthDate\"));\n\nobj.setDepartment(dep);\n\nreturn obj;\n\n}\n\nprivate Department instantiateDepartment(ResultSet rs) throws SQLException { Department dep = new Department(); dep.setId(rs.getInt(\"DepartmentId\")); dep.setName(rs.getString(\"DepName\")); return dep;\n\n}",
+    "metadata": {
+      "source": "doc1.pdf",
+      "page": 6
+    }
+  },
+  {
+    "page_content": "findByDepartment implementation\n\nSQL Query:\n\nSELECT seller.*,department.Name as DepName FROM seller INNER JOIN department ON seller.DepartmentId = department.Id WHERE DepartmentId = ? ORDER BY Name\n\n_ Seller id=2 name = Maria Green email = maria@gmail.com birthDate = 31/12/1979 baseSalary = 3090 : Department id=2 name = Electronics id=6 : Department name = Alex Pink id=2 email = bob@gmail.com birthDate = 04/03/1997 _ baseSalary = 3090\n\n_ Seller id=2 name = Maria Green email = maria@gmail.com birthDate = 31/12/1979 baseSalary = 3090 : Department id=2 name = Electronics\n\n: Seller id=2 name = Maria Green email = maria@gmail.com birthDate = 31/12/1979 baseSalary = 3090 Department id=2 name = Electronics id=6 name = Alex Pink email = bob@gmail.com birthDate = 04/03/1997 baseSalary = 3090\n\nfindAll implementation\n\nSQL Query:\n\nSELECT seller.*,department.Name as DepName FROM seller INNER JOIN department ON seller.DepartmentId = department.Id ORDER BY Name\n\nINCORRECT\n\nCORRECT",
+    "metadata": {
+      "source": "doc1.pdf",
+      "page": 7
+    }
+  },
+  {
+    "page_content": "insert implementation\n\nSQL Query:\n\nINSERT INTO seller (Name, Email, BirthDate, BaseSalary, DepartmentId) VALUES (?, ?, ?, ?, ?)\n\nupdate implementation\n\nSQL Query:\n\nUPDATE seller\n\nSET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? WHERE Id = ?\n\ndelete implementation\n\nSQL Query:\n\nDELETE FROM seller WHERE Id = ?\n\nDepartmentDao implementation and test\n\nChecklist:\n\nDepartmentDaoJDBC\n\nDaoFactory\n\nProgram2\n\nhttp://github.com/acenelio/demo-dao-jdbc",
+    "metadata": {
+      "source": "doc1.pdf",
+      "page": 8
+    }
+  }
+]

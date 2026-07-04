@@ -1,0 +1,20 @@
+2026-07-03 19:45:31 | INFO | bronze_pdf_etl | Starting Bronze Layer PDF ETL
+2026-07-03 19:45:31 | INFO | bronze_pdf_etl | Input directory: base
+2026-07-03 19:45:31 | INFO | bronze_pdf_etl | Output directory: data/bronze/parsed_pdfs
+2026-07-03 19:45:31 | INFO | bronze_pdf_etl | Batch size: 10
+2026-07-03 19:45:31 | INFO | bronze_pdf_etl | Discovered 1 PDF file(s)
+2026-07-03 19:45:31 | INFO | bronze_pdf_etl | --- Batch 1 ---
+2026-07-03 19:45:31 | INFO | bronze_pdf_etl | Processing batch of 1 PDF(s)
+2026-07-03 19:45:31 | INFO | bronze_pdf_etl | Skipping existing output for doc1.pdf
+2026-07-03 19:45:31 | INFO | bronze_pdf_etl | ETL complete. Processed 0/1 PDF(s) successfully.
+2026-07-03 19:46:33 | INFO | bronze_pdf_etl | Starting Bronze Layer PDF ETL
+2026-07-03 19:46:33 | INFO | bronze_pdf_etl | Input directory: base
+2026-07-03 19:46:33 | INFO | bronze_pdf_etl | Output directory: data/bronze/parsed_pdfs
+2026-07-03 19:46:33 | INFO | bronze_pdf_etl | Batch size: 10
+2026-07-03 19:46:33 | INFO | bronze_pdf_etl | Discovered 1 PDF file(s)
+2026-07-03 19:46:33 | INFO | bronze_pdf_etl | --- Batch 1 ---
+2026-07-03 19:46:33 | INFO | bronze_pdf_etl | Processing batch of 1 PDF(s)
+2026-07-03 19:46:33 | INFO | bronze_pdf_etl | Loading PDF with UnstructuredLoader: base/doc1.pdf
+2026-07-03 19:46:46 | INFO | bronze_pdf_etl | Extracted 158 raw elements from doc1.pdf
+2026-07-03 19:46:46 | INFO | bronze_pdf_etl | Saved Bronze record: data/bronze/parsed_pdfs/doc1.json (pages=8, elements=158, elapsed=12.98s)
+2026-07-03 19:46:46 | INFO | bronze_pdf_etl | ETL complete. Processed 1/1 PDF(s) successfully.
