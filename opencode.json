@@ -1,8 +1,0 @@
-{
-  "instructions": ["AGENTS.md", "TEAM.md"],
-  "agents": {
-    "backend": ".opencode/agents/backend-python.json",
-    "frontend": ".opencode/agents/frontend-dev.json",
-    "qa": ".opencode/agents/qa-engineer.json"
-  }
-}
